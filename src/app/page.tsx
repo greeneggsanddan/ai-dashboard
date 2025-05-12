@@ -12,6 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from './components/ui/card';
+import { Star } from 'lucide-react';
+import { Button } from './components/ui/button';
 
 export default function Home() {
   const [repos, setRepos] = useState<Repo[]>([]);
@@ -38,26 +40,32 @@ export default function Home() {
   }, []);
 
   const repoList = repos.map((repo) => (
-    <Card key={repo.id}>
-      <CardHeader>
-        <CardTitle>{repo.full_name}</CardTitle>
-        <CardDescription>{repo.description}</CardDescription>
+    <Card key={repo.id} className='flex flex-col h-full'>
+      <CardHeader className='gap-1'>
+        <CardDescription>{repo.owner}</CardDescription>
+        <CardTitle className='text-2xl text-sky-600 hover:underline'>
+          <a href={`${repo.html_url}`}>{repo.name}</a>
+        </CardTitle>
       </CardHeader>
-      <CardContent>
-        <p>Name: {repo.name}</p>
-        <p>Description: {repo.description}</p>
-        <p>Summary: {repo.summary}</p>
-        <p>Language: {repo.language}</p>
-        <p>Stars: {repo.stargazers_count}</p>
-        <p>Forks: {repo.forks_count}</p>
-        <p>Issues: {repo.open_issues_count}</p>
+      <CardContent className='flex-grow flex flex-col gap-4 justify-between'>
+        <p>{repo.description}</p>
+        <div className='flex gap-1'>
+          <Star />
+          <p>{repo.stargazers_count}</p>
+        </div>
       </CardContent>
+      <CardFooter>
+        <Button className='w-full'>Generate Summary</Button>
+      </CardFooter>
     </Card>
   ));
 
   return (
-    <div className="min-h-screen p-20 font-[family-name:var(--font-geist-sans)]">
-      <div>{repoList}</div>
+    <div className="container mx-auto min-h-screen p-4 md:p-8 font-[family-name:var(--font-geist-sans)]">
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight mb-4">Trending AI Agent Frameworks</h1>
+      </div>
+      <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4'>{repoList}</div>
     </div>
   );
 }

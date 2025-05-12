@@ -4,7 +4,7 @@ import { Repo } from '../lib/types';
 
 export async function fetchRepos() {
   const query = encodeURIComponent('ai agent framework sort:stars');
-  const url = `https://api.github.com/search/repositories?q=${query}&per_page=10`;
+  const url = `https://api.github.com/search/repositories?q=${query}&per_page=12`;
   const headers = {
     'Accept': 'application/vnd.github.v3+json',
     'X-GitHub-Api-Version': '2022-11-28',
@@ -20,11 +20,11 @@ export async function fetchRepos() {
       id: item.id,
       name: item.name,
       full_name: item.full_name,
+      owner: item.owner.login,
       description: item.description,
       html_url: item.html_url,
       stargazers_count: item.stargazers_count,
       language: item.language,
-      // owner: item.owner,
       topics: item.topics,
       created_at: item.created_at,
       updated_at: item.updated_at,
