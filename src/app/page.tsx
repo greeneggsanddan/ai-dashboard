@@ -48,7 +48,9 @@ export default function Home() {
         </CardTitle>
       </CardHeader>
       <CardContent className='flex-grow flex flex-col gap-4 justify-between'>
-        <p>{repo.description}</p>
+        <p className={`${!repo.description ? 'italic' : ''}`}>
+          {repo.description || 'No description available.'}
+        </p>
         <div className='flex gap-1'>
           <Star />
           <p>{repo.stargazers_count}</p>
