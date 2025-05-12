@@ -14,9 +14,11 @@ import {
 } from './components/ui/card';
 import { Star } from 'lucide-react';
 import { Button } from './components/ui/button';
+import RangeSelect from './components/range-select';
 
 export default function Home() {
   const [repos, setRepos] = useState<Repo[]>([]);
+  const [range, setRange] = useState('all-time');
 
   // Fetch the repositories
   useEffect(() => {
@@ -64,8 +66,12 @@ export default function Home() {
 
   return (
     <div className="container mx-auto min-h-screen p-4 md:p-8 font-[family-name:var(--font-geist-sans)]">
-      <div>
+      <div className='flex justify-between'>
         <h1 className="text-3xl font-bold tracking-tight mb-4">Trending AI Agent Frameworks</h1>
+        <RangeSelect
+          range={range}
+          setRange={setRange}
+        />
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4'>{repoList}</div>
     </div>
