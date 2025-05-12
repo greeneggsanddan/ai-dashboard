@@ -10,7 +10,7 @@ export default function RangeSelect({ range, setRange }) {
 
   return (
     <Select value={range} onValueChange={setRange}>
-      <SelectTrigger className="w-[128px]">
+      <SelectTrigger className="w-full md:w-[128px]">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

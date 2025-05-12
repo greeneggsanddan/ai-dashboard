@@ -66,8 +66,8 @@ export default function Home() {
 
   return (
     <div className="container mx-auto min-h-screen p-4 md:p-8 font-[family-name:var(--font-geist-sans)]">
-      <div className='flex justify-between'>
-        <h1 className="text-3xl font-bold tracking-tight mb-4">Trending AI Agent Frameworks</h1>
+      <div className='flex flex-col md:flex-row md:justify-between gap-4 mb-4'>
+        <h1 className="text-3xl font-bold tracking-tight">Trending AI Agent Frameworks</h1>
         <RangeSelect
           range={range}
           setRange={setRange}
