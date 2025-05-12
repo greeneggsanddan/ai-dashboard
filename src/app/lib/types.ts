@@ -13,3 +13,5 @@ export interface Repo {
   forks_count: number;
   open_issues_count: number;
 }
+
+export type TimeRange = 'all-time' | 'year' | 'month';

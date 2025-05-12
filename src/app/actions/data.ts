@@ -1,9 +1,10 @@
 'use server';
 
-import { Repo } from '../lib/types';
+import { Repo, TimeRange } from '../lib/types';
+import { subYears, subMonths, format } from 'date-fns';
 
-export async function fetchRepos() {
-  const query = encodeURIComponent('ai agent framework sort:stars');
+export async function fetchRepos(range: TimeRange) {
+  const query = encodeURIComponent(`ai agent framework ${startDate(range)}sort:stars`);
   const url = `https://api.github.com/search/repositories?q=${query}&per_page=12`;
   const headers = {
     'Accept': 'application/vnd.github.v3+json',
@@ -36,4 +37,22 @@ export async function fetchRepos() {
   } catch (error) {
     console.error('Error fetching repositories:', error);
   }
+}
+
+const startDate = (range: TimeRange) => {
+  const today = new Date();
+  let date: Date;
+
+  switch (range) {
+    case 'year':
+      date = subYears(today, 1);
+      break;
+    case 'month':
+      date = subMonths(today, 1)
+      break;
+    default:
+      return '';
+  }
+
+  return `created:>${format(date, 'yyyy-MM-dd')} `;
 }

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { fetchRepos } from './actions/data';
 import { generateSummary } from './actions/actions';
-import { Repo } from './lib/types';
+import { Repo, TimeRange } from './lib/types';
 import {
   Card,
   CardContent,
@@ -18,15 +18,15 @@ import RangeSelect from './components/range-select';
 
 export default function Home() {
   const [repos, setRepos] = useState<Repo[]>([]);
-  const [range, setRange] = useState('all-time');
+  const [range, setRange] = useState<TimeRange>('all-time');
 
-  // Fetch the repositories
+  // Fetch the repositories on load and when the date range changes
   useEffect(() => {
     let mounted = true;
 
     async function loadData() {
       try {
-        const data = await fetchRepos();
+        const data = await fetchRepos(range);
         if (mounted) {
           setRepos(data);
         }
@@ -39,7 +39,7 @@ export default function Home() {
     return () => {
       mounted = false;
     };
-  }, []);
+  }, [range]);
 
   const repoList = repos.map((repo) => (
     <Card key={repo.id} className='flex flex-col h-full'>

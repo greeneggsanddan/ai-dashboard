@@ -17,7 +17,6 @@ export default function RangeSelect({ range, setRange }) {
         <SelectItem value="all-time">All time</SelectItem>
         <SelectItem value="year">This year</SelectItem>
         <SelectItem value="month">This month</SelectItem>
-        <SelectItem value="week">This week</SelectItem>
       </SelectContent>
     </Select>
   )
