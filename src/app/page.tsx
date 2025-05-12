@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchRepos } from './actions/data';
+import { generateSummary } from './actions/actions';
 import { Repo } from './lib/types';
 import {
   Card,
@@ -45,6 +46,7 @@ export default function Home() {
       <CardContent>
         <p>Name: {repo.name}</p>
         <p>Description: {repo.description}</p>
+        <p>Summary: {repo.summary}</p>
         <p>Language: {repo.language}</p>
         <p>Stars: {repo.stargazers_count}</p>
         <p>Forks: {repo.forks_count}</p>
