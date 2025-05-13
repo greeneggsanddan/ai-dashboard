@@ -19,9 +19,10 @@ export default function RepoCard({ repo }: { repo: Repo }) {
   const [summary, setSummary] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Generates a summary of the repository using the README file
   useEffect(() => {
     let mounted = true;
-    
+
     async function loadSummary() {
       try {
         setLoading(true);
@@ -70,7 +71,11 @@ export default function RepoCard({ repo }: { repo: Repo }) {
         </div>
       </CardContent>
       <CardFooter>
-        <SummaryDialog summary={summary} loading={loading} />
+        <SummaryDialog
+          repoName={repo.name}
+          summary={summary}
+          loading={loading}
+        />
       </CardFooter>
     </Card>
   );

@@ -12,11 +12,13 @@ import Markdown from 'react-markdown';
 import { LoaderCircle } from 'lucide-react';
 
 interface SummaryDialogProps {
+  repoName: string;
   summary: string | null;
   loading: boolean;
 }
 
 export default function SummaryDialog({
+  repoName,
   summary,
   loading,
 }: SummaryDialogProps) {
@@ -36,7 +38,7 @@ export default function SummaryDialog({
       </DialogTrigger>
       <DialogContent className="max-h-[90vh]">
         <DialogHeader>
-          <DialogTitle className="text-2xl">AI Summary</DialogTitle>
+          <DialogTitle className="text-2xl">{`${repoName}`} AI Summary</DialogTitle>
         </DialogHeader>
         <div className="overflow-y-auto max-h-[calc(90vh-8rem)]">
           <Markdown>{summary || `No README available.`}</Markdown>
