@@ -21,7 +21,7 @@ export async function fetchRepos(range: TimeRange) {
       id: item.id,
       name: item.name,
       full_name: item.full_name,
-      owner: item.owner.login,
+      owner: item.owner,
       description: item.description,
       html_url: item.html_url,
       stargazers_count: item.stargazers_count,

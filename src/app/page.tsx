@@ -12,9 +12,10 @@ import {
   CardHeader,
   CardTitle,
 } from './components/ui/card';
-import { Star } from 'lucide-react';
+import { Star, Split, Clock } from 'lucide-react';
 import { Button } from './components/ui/button';
 import RangeSelect from './components/range-select';
+import { format } from 'date-fns';
 
 export default function Home() {
   const [repos, setRepos] = useState<Repo[]>([]);
@@ -42,9 +43,9 @@ export default function Home() {
   }, [range]);
 
   const repoList = repos.map((repo) => (
-    <Card key={repo.id} className='flex flex-col h-full'>
+    <Card key={repo.id} className='flex flex-col h-full gap-4'>
       <CardHeader className='gap-1'>
-        <CardDescription>{repo.owner}</CardDescription>
+        <CardDescription>{repo.owner.login}</CardDescription>
         <CardTitle className='text-2xl text-sky-600 hover:underline'>
           <a href={`${repo.html_url}`}>{repo.name}</a>
         </CardTitle>
@@ -53,9 +54,19 @@ export default function Home() {
         <p className={`${!repo.description ? 'italic' : ''}`}>
           {repo.description || 'No description available.'}
         </p>
-        <div className='flex gap-1'>
-          <Star />
-          <p>{repo.stargazers_count}</p>
+        <div className='flex justify-between text-sm text-muted-foreground'>
+          <div className='flex gap-1.5 items-center'>
+            <Star className='w-4.5 '/>
+            <p>{repo.stargazers_count}</p>
+          </div>
+          <div className='flex gap-1.5 items-center'>
+            <Split  className='w-4.5'/>
+            <p>{repo.forks_count}</p>
+          </div>
+          <div className='flex gap-1.5 items-center'>
+            <Clock className='w-4.5'/>
+            <p>Updated {format(repo.updated_at, 'MMM d')}</p>
+          </div>
         </div>
       </CardContent>
       <CardFooter>
