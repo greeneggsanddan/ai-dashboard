@@ -8,45 +8,35 @@ import {
   DialogTrigger,
 } from './ui/dialog';
 import { Button } from './ui/button';
-import { generateSummary } from '../actions/actions';
-import { Repo } from '../lib/types';
-import { useEffect, useState } from 'react';
 import Markdown from 'react-markdown';
+import { LoaderCircle } from 'lucide-react';
 
-export default function SummaryDialog({ repo }: { repo: Repo }) {
-  const [summary, setSummary] = useState<string | null>(null);
+interface SummaryDialogProps {
+  summary: string | null;
+  loading: boolean;
+}
 
-  useEffect(() => {
-    let mounted = true;
-
-    async function loadSummary() {
-      try {
-        const data = await generateSummary(repo.owner.login, repo.name);
-        if (mounted) {
-          setSummary(data);
-        }
-      } catch (error) {
-        console.error('Error generating summary:', error);
-      }
-    }
-
-    loadSummary();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
+export default function SummaryDialog({ summary, loading } : SummaryDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full">Generate Summary</Button>
+        <Button className="w-full" disabled={loading}>
+          {loading ? (
+            <>
+              Generating AI summary
+              <LoaderCircle className="ml-1 h-4 w-4 animate-spin" />
+            </>
+          ) : (
+            "View summary"
+          )}
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className='text-2xl'>AI Summary</DialogTitle>
         </DialogHeader>
         <div>
-          <Markdown>{summary}</Markdown>
+          <Markdown>{summary || `No README available.`}</Markdown>
         </div>
       </DialogContent>
     </Dialog>

@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Card,
   CardHeader,
@@ -10,8 +12,37 @@ import { Star, Split, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { Repo } from '../lib/types';
 import SummaryDialog from './summary-dialog';
+import { useState, useEffect } from 'react';
+import { generateSummary } from '../actions/actions';
 
 export default function RepoCard({ repo }: { repo: Repo }) {
+  const [summary, setSummary] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let mounted = true;
+    
+    async function loadSummary() {
+      try {
+        setLoading(true);
+        const data = await generateSummary(repo.owner.login, repo.name);
+        console.log('Summary:', data);
+        if (mounted) {
+          setSummary(data);
+        }
+      } catch (error) {
+        console.error('Error generating summary:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadSummary();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <Card className="flex flex-col h-full gap-4">
       <CardHeader className="gap-1">
@@ -40,9 +71,7 @@ export default function RepoCard({ repo }: { repo: Repo }) {
         </div>
       </CardContent>
       <CardFooter>
-        <SummaryDialog
-          repo = {repo}
-        />
+        <SummaryDialog summary={summary} loading={loading} />
       </CardFooter>
     </Card>
   );
