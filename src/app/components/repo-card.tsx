@@ -12,7 +12,7 @@ import { Star, Split, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import { Repo } from '../lib/types';
 import SummaryDialog from './summary-dialog';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { generateSummary } from '../actions/actions';
 import { Button } from './ui/button';
 import { LoaderCircle } from 'lucide-react';

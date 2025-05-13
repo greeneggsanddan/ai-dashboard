@@ -9,7 +9,6 @@ import {
 } from './ui/dialog';
 import { Button } from './ui/button';
 import Markdown from 'react-markdown';
-import { LoaderCircle } from 'lucide-react';
 
 interface SummaryDialogProps {
   repoName: string;
