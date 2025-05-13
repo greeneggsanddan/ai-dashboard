@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { fetchRepos } from './actions/data';
-import { generateSummary } from './actions/actions';
 import { Repo, TimeRange } from './lib/types';
 import RepoCard from './components/repo-card';
 import RangeSelect from './components/range-select';

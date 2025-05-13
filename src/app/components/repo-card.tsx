@@ -8,8 +8,8 @@ import {
 } from './ui/card';
 import { Star, Split, Clock } from 'lucide-react';
 import { format } from 'date-fns';
-import { Button } from './ui/button';
 import { Repo } from '../lib/types';
+import SummaryDialog from './summary-dialog';
 
 export default function RepoCard({ repo }: { repo: Repo }) {
   return (
@@ -40,7 +40,9 @@ export default function RepoCard({ repo }: { repo: Repo }) {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full">Generate Summary</Button>
+        <SummaryDialog
+          repo = {repo}
+        />
       </CardFooter>
     </Card>
   );
