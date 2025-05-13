@@ -7,13 +7,11 @@ async function fetchReadme(owner: string, repo: string) {
   const headers = {
     Accept: 'application/vnd.github+json',
     'X-GitHub-Api-Version': '2022-11-28',
+    Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
   };
 
   try {
     const response = await fetch(url, { headers });
-    if (!response.ok) {
-      throw new Error('GitHub API request failed');
-    }
     const data = await response.json();
 
     if (data.content) {
