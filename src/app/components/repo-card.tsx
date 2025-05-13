@@ -26,6 +26,10 @@ export default function RepoCard({ repo }: { repo: Repo }) {
       try {
         setLoading(true);
         const data = await generateSummary(repo.owner.login, repo.name);
+<<<<<<< HEAD
+=======
+        console.log('Summary:', data);
+>>>>>>> e58737e6934b9bf534ff8e6f8339dc1eca293fe0
         if (mounted) {
           setSummary(data);
         }
