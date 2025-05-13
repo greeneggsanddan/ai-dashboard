@@ -4,12 +4,14 @@ import { Repo, TimeRange } from '../lib/types';
 import { subYears, subMonths, format } from 'date-fns';
 
 export async function fetchRepos(range: TimeRange) {
-  const query = encodeURIComponent(`ai agent framework ${startDate(range)}sort:stars`);
+  const query = encodeURIComponent(
+    `ai agent framework ${startDate(range)}sort:stars`
+  );
   const url = `https://api.github.com/search/repositories?q=${query}&per_page=12`;
   const headers = {
-    'Accept': 'application/vnd.github.v3+json',
+    Accept: 'application/vnd.github.v3+json',
     'X-GitHub-Api-Version': '2022-11-28',
-  }
+  };
 
   try {
     const response = await fetch(url, { headers });
@@ -32,7 +34,7 @@ export async function fetchRepos(range: TimeRange) {
       forks_count: item.forks_count,
       open_issues_count: item.open_issues_count,
     }));
-    
+
     return repos;
   } catch (error) {
     console.error('Error fetching repositories:', error);
@@ -48,11 +50,11 @@ const startDate = (range: TimeRange) => {
       date = subYears(today, 1);
       break;
     case 'month':
-      date = subMonths(today, 1)
+      date = subMonths(today, 1);
       break;
     default:
       return '';
   }
 
   return `created:>${format(date, 'yyyy-MM-dd')} `;
-}
+};

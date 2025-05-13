@@ -5,11 +5,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from './ui/select';
+import { TimeRange } from '../lib/types';
 
-export default function RangeSelect({ range, setRange }) {
+interface RangeSelectProps {
+  range: TimeRange;
+  setRange: React.Dispatch<React.SetStateAction<TimeRange>>;
+}
 
+export default function RangeSelect({ range, setRange }: RangeSelectProps) {
   return (
-    <Select value={range} onValueChange={setRange}>
+    <Select
+      value={range}
+      onValueChange={(value) => setRange(value as TimeRange)}
+    >
       <SelectTrigger className="w-full md:w-[128px]">
         <SelectValue />
       </SelectTrigger>
@@ -19,5 +27,5 @@ export default function RangeSelect({ range, setRange }) {
         <SelectItem value="month">This month</SelectItem>
       </SelectContent>
     </Select>
-  )
+  );
 }
