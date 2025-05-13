@@ -14,34 +14,24 @@ import { Repo } from '../lib/types';
 import SummaryDialog from './summary-dialog';
 import { useState, useEffect } from 'react';
 import { generateSummary } from '../actions/actions';
+import { Button } from './ui/button';
+import { LoaderCircle } from 'lucide-react';
 
 export default function RepoCard({ repo }: { repo: Repo }) {
   const [summary, setSummary] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Generates a summary of the repository using the README file
-  useEffect(() => {
-    let mounted = true;
-
-    async function loadSummary() {
-      try {
-        setLoading(true);
-        const data = await generateSummary(repo.owner.login, repo.name);
-        if (mounted) {
-          setSummary(data);
-        }
-      } catch (error) {
-        console.error('Error generating summary:', error);
-      } finally {
-        setLoading(false);
-      }
+  const handleSummary = async () => {
+    setLoading(true);
+    try {
+      const response = await generateSummary(repo.owner.login, repo.name);
+      setSummary(response);
+    } catch (error) {
+      console.error('Error generating summary:', error);
+    } finally {
+      setLoading(false);
     }
-
-    loadSummary();
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  };
 
   return (
     <Card className="flex flex-col h-full gap-4">
@@ -71,11 +61,25 @@ export default function RepoCard({ repo }: { repo: Repo }) {
         </div>
       </CardContent>
       <CardFooter>
-        <SummaryDialog
-          repoName={repo.name}
-          summary={summary}
-          loading={loading}
-        />
+        {summary ? (
+          <SummaryDialog repoName={repo.name} summary={summary} />
+        ) : (
+          <Button
+            className="w-full"
+            onClick={handleSummary}
+            disabled={loading}
+            aria-label={`Generate AI summary for ${repo.name}`}
+          >
+            {loading ? (
+              <>
+                <span>Generating AI summary</span>
+                <LoaderCircle className="ml-1 h-4 w-4 animate-spin" />
+              </>
+            ) : (
+              'Generate AI summary'
+            )}
+          </Button>
+        )}
       </CardFooter>
     </Card>
   );

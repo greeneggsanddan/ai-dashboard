@@ -14,31 +14,27 @@ import { LoaderCircle } from 'lucide-react';
 interface SummaryDialogProps {
   repoName: string;
   summary: string | null;
-  loading: boolean;
 }
 
 export default function SummaryDialog({
   repoName,
   summary,
-  loading,
 }: SummaryDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full" disabled={loading}>
-          {loading ? (
-            <>
-              Generating AI summary
-              <LoaderCircle className="ml-1 h-4 w-4 animate-spin" />
-            </>
-          ) : (
-            'View summary'
-          )}
+        <Button
+          className="w-full"
+          aria-label={`View AI summary for ${repoName}`}
+        >
+          View Summary
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[90vh]">
         <DialogHeader>
-          <DialogTitle className="text-2xl">{`${repoName}`} AI Summary</DialogTitle>
+          <DialogTitle className="text-2xl">
+            {`${repoName}`} AI Summary
+          </DialogTitle>
         </DialogHeader>
         <div className="overflow-y-auto max-h-[calc(90vh-8rem)]">
           <Markdown>{summary || `No README available.`}</Markdown>
