@@ -7,7 +7,7 @@ export async function fetchRepos(range: TimeRange) {
   const query = encodeURIComponent(
     `ai agent framework ${startDate(range)}sort:stars`
   );
-  const url = `https://api.github.com/search/repositories?q=${query}&per_page=1`;
+  const url = `https://api.github.com/search/repositories?q=${query}&per_page=12`;
   const headers = {
     Accept: 'application/vnd.github.v3+json',
     'X-GitHub-Api-Version': '2022-11-28',

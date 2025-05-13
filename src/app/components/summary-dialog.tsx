@@ -16,7 +16,10 @@ interface SummaryDialogProps {
   loading: boolean;
 }
 
-export default function SummaryDialog({ summary, loading } : SummaryDialogProps) {
+export default function SummaryDialog({
+  summary,
+  loading,
+}: SummaryDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -27,15 +30,15 @@ export default function SummaryDialog({ summary, loading } : SummaryDialogProps)
               <LoaderCircle className="ml-1 h-4 w-4 animate-spin" />
             </>
           ) : (
-            "View summary"
+            'View summary'
           )}
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[90vh]">
         <DialogHeader>
-          <DialogTitle className='text-2xl'>AI Summary</DialogTitle>
+          <DialogTitle className="text-2xl">AI Summary</DialogTitle>
         </DialogHeader>
-        <div>
+        <div className="overflow-y-auto max-h-[calc(90vh-8rem)]">
           <Markdown>{summary || `No README available.`}</Markdown>
         </div>
       </DialogContent>
